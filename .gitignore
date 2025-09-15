@@ -7,7 +7,7 @@ __pycache__/
 *.so
 data/
 dataset/
-
+checkpoints/
 # Distribution / packaging
 .Python
 build/
