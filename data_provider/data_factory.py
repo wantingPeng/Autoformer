@@ -1,4 +1,5 @@
 from data_provider.data_loader import Dataset_ETT_hour, Dataset_ETT_minute, Dataset_Custom, Dataset_Pred
+from data_provider.data_loader_anomaly import get_anomaly_loader
 from torch.utils.data import DataLoader
 
 data_dict = {
@@ -7,10 +8,31 @@ data_dict = {
     'ETTm1': Dataset_ETT_minute,
     'ETTm2': Dataset_ETT_minute,
     'custom': Dataset_Custom,
+    'anomaly': 'anomaly',  # Special key for anomaly detection
 }
 
 
 def data_provider(args, flag):
+    # Special handling for anomaly detection
+    if args.data == 'anomaly':
+        # Use os.path.join for proper path construction
+        import os
+        data_path = os.path.join(args.root_path, args.data_path)
+        
+        # Use anomaly data loader
+        data_set, data_loader = get_anomaly_loader(
+            data_path=data_path,
+            batch_size=args.batch_size if flag != 'pred' else 1,
+            win_size=args.seq_len,
+            step=args.stride if hasattr(args, 'stride') else 1,
+            mode=flag,
+            num_workers=args.num_workers
+        )
+        
+        print(flag, len(data_set))
+        return data_set, data_loader
+    
+    # Standard Autoformer data loading for other datasets
     Data = data_dict[args.data]
     timeenc = 0 if args.embed != 'timeF' else 1
 

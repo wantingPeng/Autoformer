@@ -1,0 +1,13 @@
+Setting: anomaly_test_Autoformer_anomaly_ftM_sl10_ll0_pl0_dm64_nh8_el2_dl1_df64_fc3_ebtimeF_dtTrue_test
+=== Original Metrics ===
+Accuracy: 0.8083
+Precision: 0.0517
+Recall: 0.1607
+F1 Score: 0.0782
+AUC: 0.5110
+
+=== Adjusted Metrics ===
+Adjusted Accuracy: 0.8420
+Adjusted Precision: 0.2191
+Adjusted Recall: 0.8274
+Adjusted F1 Score: 0.3464
